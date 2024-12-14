@@ -34,9 +34,7 @@ const SearchResults = () => {
     } else {
       const fetchPosts = async () => {
         try {
-          const res = await fetch(`${apiBaseUrl}/api/post/get-post`, {
-            credentials: "include",
-          });
+          const res = await fetch(`${apiBaseUrl}/api/post/get-post`);
           const data = await res.json();
           if (res.ok) {
             setResults(data.posts);
