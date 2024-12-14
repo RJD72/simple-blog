@@ -1,10 +1,15 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
 
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: "/", // Ensure this is correct ("/" for root hosting or a subpath like "/mysimpleblogpage/" if needed)
-  build: {
-    outDir: "dist",
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        secure: false,
+      },
+    },
   },
+  plugins: [react()],
 });
