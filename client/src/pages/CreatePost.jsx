@@ -114,7 +114,8 @@ const CreatePost = () => {
       setFile(null);
       setPosts(data.savedPost);
 
-      navigate(`${apiBaseUrl}/post/${data.savedPost.slug}`);
+      navigate(`/post/${data.savedPost.slug}`);
+      console.log(data.savedPost.slug);
     } catch (error) {
       setPublishError("Something went wrong during post creation.");
       console.error(error.message);

@@ -23,6 +23,7 @@ export const loginAndFetchProfile = (email, password) => async (dispatch) => {
         "Content-Type": "application/json", // Specify JSON as the content type
       },
       body: JSON.stringify({ email, password }), // Send the user's credentials in the request body
+      credentials: "include",
     });
 
     // Parse the JSON response from the server
