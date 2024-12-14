@@ -34,12 +34,19 @@ export const loginAndFetchProfile = (email, password) => async (dispatch) => {
     }
 
     // Extract userId and token from the login response data
-    const { userId } = loginData;
+    const { userId, token } = loginData;
 
     // Step 2: Fetch user profile
     // Use the userId to fetch the logged-in user's profile data
     const profileResponse = await fetch(
-      `${apiBaseUrl}/api/user/get-user/${userId}`
+      `${apiBaseUrl}/api/user/get-user/${userId}`,
+      {
+        method: "GET", // HTTP method to retrieve user data
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, // Attach the token in the Authorization header
+        },
+      }
     );
 
     // Parse the JSON response from the server
