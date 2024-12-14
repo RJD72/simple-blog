@@ -6,14 +6,14 @@ const util = require("util");
 
 // Middleware to protect routes and validate user authentication
 const verifyToken = asyncErrorHandler(async (req, res, next) => {
+  const cookies = req.headers.cookie;
   let token;
 
-  // Check Authorization header
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    token = req.headers.authorization.split(" ")[1];
+  if (cookies) {
+    const match = cookies.split("; ").find((c) => c.startsWith("token="));
+    if (match) {
+      token = match.split("=")[1];
+    }
   }
 
   // Check cookies if token is not in Authorization header
