@@ -8,6 +8,7 @@ import {
   updateSuccess,
 } from "../redux/user/userSlice";
 import { uploadImage } from "../apiCalls/uploadImage";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 const ProfilePage = () => {
   const [formInfo, setFormInfo] = useState({});
@@ -15,7 +16,7 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
 
   const handleUpload = async (e) => {
-    const url = `/api/user/upload`;
+    const url = `${apiBaseUrl}/api/user/upload`;
     try {
       dispatch(updateStart());
 
@@ -41,14 +42,17 @@ const ProfilePage = () => {
 
     dispatch(updateStart());
     try {
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(formInfo),
-      });
+      const res = await fetch(
+        `${apiBaseUrl}/api/user/update/${currentUser._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(formInfo),
+        }
+      );
 
       const data = await res.json();
 

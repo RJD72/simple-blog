@@ -6,6 +6,7 @@ import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import { uploadImage } from "../apiCalls/uploadImage";
 import { useDispatch, useSelector } from "react-redux";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 // Move toolbarOptions outside the component
 const toolbarOptions = [
@@ -70,7 +71,7 @@ const CreatePost = () => {
 
       // Upload the image if a file is selected
       if (file) {
-        const uploadUrl = "/api/post/upload";
+        const uploadUrl = `${apiBaseUrl}/api/post/upload`;
         try {
           const uploadResponse = await uploadImage(file, uploadUrl);
           uploadedImageUrl = uploadResponse.imageUrl.secure_url;
@@ -83,7 +84,7 @@ const CreatePost = () => {
       }
 
       // Create the post
-      const res = await fetch("/api/post/create-post", {
+      const res = await fetch(`${apiBaseUrl}/api/post/create-post`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -113,7 +114,7 @@ const CreatePost = () => {
       setFile(null);
       setPosts(data.savedPost);
 
-      navigate(`/post/${data.savedPost.slug}`);
+      navigate(`${apiBaseUrl}/post/${data.savedPost.slug}`);
     } catch (error) {
       setPublishError("Something went wrong during post creation.");
       console.error(error.message);

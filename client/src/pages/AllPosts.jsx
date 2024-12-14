@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Table, TableHead, TableHeadCell, Modal, Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 const AllPosts = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -14,7 +15,7 @@ const AllPosts = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`/api/post/get-post`, {
+        const res = await fetch(`${apiBaseUrl}/api/post/get-post`, {
           credentials: "include",
         });
         const data = await res.json();
@@ -35,9 +36,12 @@ const AllPosts = () => {
   const handleShowMore = async () => {
     const startIndex = userPosts.length;
     try {
-      const res = await fetch(`/api/post/get-post?startIndex=${startIndex}`, {
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${apiBaseUrl}/api/post/get-post?startIndex=${startIndex}`,
+        {
+          credentials: "include",
+        }
+      );
       const data = await res.json();
       if (res.ok) {
         setUserPosts((prev) => [...prev, ...data.posts]);
@@ -53,10 +57,13 @@ const AllPosts = () => {
   const handleDeletePost = async () => {
     setShowModal(false);
     try {
-      const res = await fetch(`/api/post/delete-post/${postIdToDelete}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${apiBaseUrl}/api/post/delete-post/${postIdToDelete}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         console.log(data.message);

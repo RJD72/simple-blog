@@ -6,6 +6,7 @@ import { signOutSuccess } from "../redux/user/userSlice";
 import { customButtonTheme } from "../customThemes/buttonTheme";
 import { customNavLinkTheme } from "../customThemes/navLinkTheme";
 import Search from "./Search";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 function Header() {
   const location = useLocation();
@@ -16,7 +17,7 @@ function Header() {
 
   const handleSignOut = async () => {
     try {
-      const logoutResponse = await fetch("/api/auth/logout", {
+      const logoutResponse = await fetch(`${apiBaseUrl}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Table, TableHead, TableHeadCell, Modal, Button } from "flowbite-react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 const AllUsers = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -14,7 +15,7 @@ const AllUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch(`/api/user/get-users`, {
+        const res = await fetch(`${apiBaseUrl}/api/user/get-users`, {
           method: "GET",
           credentials: "include",
         });
@@ -36,7 +37,9 @@ const AllUsers = () => {
   const handleShowMore = async () => {
     const startIndex = users.length;
     try {
-      const res = await fetch(`/api/user/get-users?start=${startIndex}`);
+      const res = await fetch(
+        `${apiBaseUrl}/api/user/get-users?start=${startIndex}`
+      );
       const data = await res.json();
       if (res.ok) {
         setUsers((prev) => [...prev, ...data.users]);
@@ -52,10 +55,13 @@ const AllUsers = () => {
   const handleDeleteUser = async () => {
     setShowModal(false);
     try {
-      const res = await fetch(`/api/user/delete-user/${userIdToDelete}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${apiBaseUrl}/api/user/delete-user/${userIdToDelete}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
 
       if (res.ok) {
         setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));

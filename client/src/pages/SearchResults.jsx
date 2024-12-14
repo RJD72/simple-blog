@@ -2,6 +2,7 @@ import { Label, Select } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PostCard from "../components/PostCard";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 const SearchResults = () => {
   const location = useLocation(); // Access the current location
@@ -20,7 +21,7 @@ const SearchResults = () => {
       setSearchTerm(searchTitle);
       const fetchSearchResults = async () => {
         try {
-          const res = await fetch(`/api/post/get-post?${term}`);
+          const res = await fetch(`${apiBaseUrl}/api/post/get-post?${term}`);
           if (res.ok) {
             const data = await res.json();
             setResults(data.posts);
@@ -33,7 +34,7 @@ const SearchResults = () => {
     } else {
       const fetchPosts = async () => {
         try {
-          const res = await fetch(`/api/post/get-post`, {
+          const res = await fetch(`${apiBaseUrl}/api/post/get-post`, {
             credentials: "include",
           });
           const data = await res.json();
@@ -67,9 +68,12 @@ const SearchResults = () => {
   const handleShowMore = async () => {
     const startIndex = results.length;
     try {
-      const res = await fetch(`/api/post/get-post?startIndex=${startIndex}`, {
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${apiBaseUrl}/api/post/get-post?startIndex=${startIndex}`,
+        {
+          credentials: "include",
+        }
+      );
       const data = await res.json();
       if (res.ok) {
         setResults((prev) => [...prev, ...data.posts]);

@@ -4,6 +4,7 @@ import moment from "moment";
 import { FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Button, Textarea } from "flowbite-react";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const [user, setUser] = useState({});
@@ -14,7 +15,9 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch(`/api/user/comment-author/${comment.author}`);
+        const res = await fetch(
+          `${apiBaseUrl}/api/user/comment-author/${comment.author}`
+        );
         const data = await res.json();
 
         if (res.ok) {
@@ -34,16 +37,19 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
 
   const handleSave = async () => {
     try {
-      const res = await fetch(`/api/comment/edit-comment/${comment._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          content: editedContent,
-        }),
-      });
+      const res = await fetch(
+        `${apiBaseUrl}/api/comment/edit-comment/${comment._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            content: editedContent,
+          }),
+        }
+      );
       if (res.ok) {
         setIsEditing(false);
         onEdit(comment, editedContent);

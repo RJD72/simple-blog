@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { customButtonTheme } from "../customThemes/buttonTheme";
 import GoogleAuth from "../components/GoogleAuth";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
@@ -59,7 +60,7 @@ const SignUp = () => {
       setLoading(true);
       setErrorMessage(null);
 
-      const response = await fetch("/api/auth/register", {
+      const response = await fetch(`${apiBaseUrl}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import Comment from "./Comment";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 const CommentSection = ({ postId }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -22,7 +23,7 @@ const CommentSection = ({ postId }) => {
     if (comment.length > 200) return;
 
     try {
-      const res = await fetch("/api/comment/create-comment", {
+      const res = await fetch(`${apiBaseUrl}/api/comment/create-comment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +50,9 @@ const CommentSection = ({ postId }) => {
   useEffect(() => {
     const getComments = async () => {
       try {
-        const res = await fetch(`/api/comment/get-post-comments/${postId}`);
+        const res = await fetch(
+          `${apiBaseUrl}/api/comment/get-post-comments/${postId}`
+        );
         if (res.ok) {
           const data = await res.json();
           setComments(data);
@@ -69,9 +72,12 @@ const CommentSection = ({ postId }) => {
         return;
       }
 
-      const res = await fetch(`/api/comment/like-comment/${commentId}`, {
-        method: "PUT",
-      });
+      const res = await fetch(
+        `${apiBaseUrl}/api/comment/like-comment/${commentId}`,
+        {
+          method: "PUT",
+        }
+      );
       if (res.ok) {
         const data = await res.json();
 
@@ -107,9 +113,12 @@ const CommentSection = ({ postId }) => {
         navigate("/sign-in");
         return;
       }
-      const res = await fetch(`/api/comment/delete-comment/${commentId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${apiBaseUrl}/api/comment/delete-comment/${commentId}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (res.ok) {
         const data = await res.json;
 

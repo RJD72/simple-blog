@@ -5,6 +5,7 @@ import "react-quill/dist/quill.snow.css"; // Or "quill.bubble.css" if you're usi
 import PostCard from "../components/PostCard";
 import Hero from "../components/Hero";
 import { customButtonTheme } from "../customThemes/buttonTheme";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -12,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     try {
       const fetchPosts = async () => {
-        const res = await fetch("/api/post/get-post");
+        const res = await fetch(`${apiBaseUrl}/api/post/get-post`);
         const data = await res.json();
         setPosts(data.posts);
       };

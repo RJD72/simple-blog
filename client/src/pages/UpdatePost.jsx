@@ -6,6 +6,7 @@ import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { uploadImage } from "../apiCalls/uploadImage";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 const toolbarOptions = [
   ["bold", "italic", "underline", "strike"],
@@ -60,7 +61,9 @@ const UpdatePost = () => {
   useEffect(() => {
     try {
       const fetchPost = async () => {
-        const res = await fetch(`/api/post/get-post?postId=${postId}`);
+        const res = await fetch(
+          `${apiBaseUrl}/api/post/get-post?postId=${postId}`
+        );
         const data = await res.json();
         if (!res.ok) {
           console.log(data.message);
@@ -88,7 +91,7 @@ const UpdatePost = () => {
 
       // Upload the image if a file is selected
       if (file) {
-        const uploadUrl = "/api/post/upload";
+        const uploadUrl = `${apiBaseUrl}/api/post/upload`;
         try {
           const uploadResponse = await uploadImage(file, uploadUrl);
           uploadedImageUrl = uploadResponse.imageUrl.secure_url;
@@ -100,7 +103,7 @@ const UpdatePost = () => {
         }
       }
 
-      const res = await fetch(`/api/post/update-post/${postId}`, {
+      const res = await fetch(`${apiBaseUrl}/api/post/update-post/${postId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

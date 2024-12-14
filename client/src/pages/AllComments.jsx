@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Table, TableHead, TableHeadCell, Modal, Button } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 const AllComments = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -13,7 +14,7 @@ const AllComments = () => {
   useEffect(() => {
     try {
       const fetchComments = async () => {
-        const res = await fetch(`/api/comment/get-comments`, {
+        const res = await fetch(`${apiBaseUrl}/api/comment/get-comments`, {
           credentials: "include",
         });
         const data = await res.json();
@@ -34,7 +35,7 @@ const AllComments = () => {
     const startIndex = comments.length;
     try {
       const res = await fetch(
-        `/api/comment/get-comments?startIndex=${startIndex}`,
+        `${apiBaseUrl}/api/comment/get-comments?startIndex=${startIndex}`,
         {
           credentials: "include",
         }
@@ -55,7 +56,7 @@ const AllComments = () => {
     setShowModal(false);
     try {
       const res = await fetch(
-        `/api/comment/delete-comment/${commentIdToDelete}`,
+        `${apiBaseUrl}/api/comment/delete-comment/${commentIdToDelete}`,
         {
           method: "DELETE",
           credentials: "include",

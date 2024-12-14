@@ -5,6 +5,7 @@ import { Button, Spinner } from "flowbite-react";
 import CommentSection from "../components/CommentSection";
 import PostCard from "../components/PostCard";
 import "react-quill/dist/quill.snow.css";
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 
 const PostPage = () => {
   const { postSlug } = useParams();
@@ -17,7 +18,9 @@ const PostPage = () => {
     const fetchPost = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/post/get-post?slug=${postSlug}`);
+        const res = await fetch(
+          `${apiBaseUrl}/api/post/get-post?slug=${postSlug}`
+        );
         const data = await res.json();
         if (!res.ok) {
           setError(true);
@@ -42,7 +45,7 @@ const PostPage = () => {
   useEffect(() => {
     try {
       const fetchRecentPosts = async () => {
-        const res = await fetch("/api/post/get-post?limit=3");
+        const res = await fetch(`${apiBaseUrl}/api/post/get-post?limit=3`);
         const data = await res.json();
         if (res.ok) {
           setRecentPosts(data.posts);
