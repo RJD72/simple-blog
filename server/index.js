@@ -14,7 +14,6 @@ const app = express();
 app.use(cookieParser());
 
 const allowedOrigins = [
-  "http://localhost:3000", // Your local frontend
   "https://simple-blog-sadh.onrender.com", // Deployed backend
   "https://your-frontend.netlify.app", // Deployed frontend
 ];
