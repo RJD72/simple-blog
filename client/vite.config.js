@@ -8,32 +8,10 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: "public/_headers",
-          dest: ".",
+          src: "public/_redirects", // Path to the redirects file
+          dest: ".", // Copy to the root of the build output
         },
       ],
     }),
   ],
-  server: {
-    proxy: {
-      "/api": {
-        target: "http://localhost:3000",
-        secure: false,
-      },
-    },
-  },
-  build: {
-    outDir: "dist",
-    chunkSizeWarningLimit: 500, // Suppress warnings about large chunks
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return "vendor";
-          }
-        },
-      },
-    },
-  },
-  base: "/",
 });
