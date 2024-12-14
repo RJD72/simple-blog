@@ -39,11 +39,7 @@ export const loginAndFetchProfile = (email, password) => async (dispatch) => {
     // Step 2: Fetch user profile
     // Use the userId to fetch the logged-in user's profile data
     const profileResponse = await fetch(
-      `${apiBaseUrl}/api/user/get-user/${userId}`,
-      {
-        method: "GET", // HTTP method to retrieve user data
-        credentials: "include",
-      }
+      `${apiBaseUrl}/api/user/get-user/${userId}`
     );
 
     // Parse the JSON response from the server
