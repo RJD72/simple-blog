@@ -95,7 +95,7 @@ exports.getUser = async (req, res, next) => {
 };
 
 exports.getUsers = async (req, res, next) => {
-  if (!req.user.role === "admin") {
+  if (req.user.role !== "admin") {
     return next(CustomError("Unauthorized!", 403));
   }
 

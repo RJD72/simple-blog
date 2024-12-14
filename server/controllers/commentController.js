@@ -118,7 +118,7 @@ exports.editComment = async (req, res, next) => {
 };
 
 exports.getComments = async (req, res, next) => {
-  if (!req.user.role === "admin") {
+  if (req.user.role !== "admin") {
     return next(customError("Unauthorized", 403));
   }
   try {
