@@ -21,7 +21,7 @@ const Home = () => {
     } catch (error) {
       console.log(error.message);
     }
-  }, [posts]);
+  }, []);
   return (
     <div className="min-h-screen ">
       <div className="">
