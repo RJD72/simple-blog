@@ -15,9 +15,7 @@ const AllPosts = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`${apiBaseUrl}/api/post/get-post`, {
-          credentials: "include",
-        });
+        const res = await fetch(`${apiBaseUrl}/api/post/get-post`);
         const data = await res.json();
         if (res.ok) {
           setUserPosts(data.posts);
@@ -37,10 +35,7 @@ const AllPosts = () => {
     const startIndex = userPosts.length;
     try {
       const res = await fetch(
-        `${apiBaseUrl}/api/post/get-post?startIndex=${startIndex}`,
-        {
-          credentials: "include",
-        }
+        `${apiBaseUrl}/api/post/get-post?startIndex=${startIndex}`
       );
       const data = await res.json();
       if (res.ok) {

@@ -67,10 +67,7 @@ const SearchResults = () => {
     const startIndex = results.length;
     try {
       const res = await fetch(
-        `${apiBaseUrl}/api/post/get-post?startIndex=${startIndex}`,
-        {
-          credentials: "include",
-        }
+        `${apiBaseUrl}/api/post/get-post?startIndex=${startIndex}`
       );
       const data = await res.json();
       if (res.ok) {
