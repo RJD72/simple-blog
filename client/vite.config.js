@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
@@ -24,7 +23,17 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "dist", // Default build output directory
+    outDir: "dist",
+    chunkSizeWarningLimit: 500, // Suppress warnings about large chunks
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            return "vendor";
+          }
+        },
+      },
+    },
   },
-  base: "/", // Update if hosting under a subdirectory (e.g., "/my-app/")
+  base: "/",
 });
