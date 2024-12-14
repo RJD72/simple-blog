@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 const allowedOrigins = [
   "https://simple-blog-sadh.onrender.com", // Deployed backend
-  "https://mysimpleblogpage.netlify.app", // Deployed frontend
+  "https://my-simple-blog-page.netlify.app", // Deployed frontend
 ];
 
 app.use(
