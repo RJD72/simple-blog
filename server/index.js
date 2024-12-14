@@ -13,10 +13,22 @@ const app = express();
 
 app.use(cookieParser());
 
+const allowedOrigins = [
+  "http://localhost:3000", // Your local frontend
+  "https://simple-blog-sadh.onrender.com", // Deployed backend
+  "https://your-frontend.netlify.app", // Deployed frontend
+];
+
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
-    credentials: true,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (e.g., Postman)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
 
